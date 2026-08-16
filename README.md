@@ -39,37 +39,92 @@ The investigation began by examining the provided packet capture in Wireshark.
 
 Network traffic was reviewed and filtered to identify protocols and communication patterns relevant to the suspected credential-poisoning activity.
 
+#### PCAP Investigation Overview
+
+![PCAP investigation overview](screenshots/pcap-investigation-overview.png)
+
+*Initial review of the captured network traffic in Wireshark to identify suspicious communication patterns and relevant protocols.*
+
 ### 2. LLMNR/NBT-NS Analysis
 
-Traffic associated with LLMNR and NBT-NS was examined for evidence of name-resolution poisoning.
+The captured traffic was examined for LLMNR and NBT-NS activity associated with the suspected credential-poisoning incident.
 
-These protocols can become relevant during an investigation when a system attempts to resolve a hostname and another device responds to the request.
+These name-resolution protocols were important to the investigation because they helped reveal how systems attempted to resolve network names and how another host responded to those requests.
 
-The captured traffic was analyzed to determine which systems participated in the suspicious name-resolution activity.
+#### LLMNR/NBT-NS Traffic Analysis
+
+![LLMNR and NBT-NS traffic analysis](screenshots/llmnr-nbtns-traffic-analysis.png)
+
+*Wireshark analysis of LLMNR/NBT-NS traffic used to investigate suspicious name-resolution activity.*
+
+The packet evidence was then examined further to identify the response associated with the suspected poisoning activity.
+
+#### Poisoning Response Evidence
+
+![Poisoning response evidence](screenshots/poisoning-response-evidence.png)
+
+*Packet-level evidence examined to identify the host responding during the suspicious name-resolution exchange.*
 
 ### 3. Identification of Involved Systems
 
-Packet evidence was correlated using network identifiers such as IP addresses and communication patterns.
+The network evidence was analyzed to identify the systems involved in the suspicious activity.
 
-This helped distinguish the system generating the name-resolution request from the system responding to it and supported identification of the hosts involved in the incident.
+IP addresses, packet direction, and communication patterns were correlated to distinguish the system generating the name-resolution request from the system responding to it.
 
+#### Involved Hosts Analysis
+
+![Involved hosts analysis](screenshots/involved-hosts-analysis.png)
+
+*Packet evidence used to correlate network addresses and identify systems involved in the suspicious communication.*
+
+Correlating the hosts across multiple packets helped establish the relationship between the systems and provided additional context for the credential-poisoning investigation.
 ### 4. Credential Exposure Investigation
 
-The investigation continued by examining authentication-related network evidence associated with the suspicious activity.
+The investigation continued by examining authentication-related traffic associated with the suspicious name-resolution activity.
 
-Relevant packets were analyzed to determine whether credential information had been exposed as part of the poisoning activity and to identify the account associated with the observed authentication attempt.
+Packet evidence was reviewed to identify authentication attempts and determine whether credential information was exposed during the incident.
+
+#### Authentication Evidence
+
+![Credential authentication evidence](screenshots/credential-authentication-evidence.png)
+
+*Authentication-related network evidence examined in Wireshark as part of the credential-poisoning investigation.*
+
+The authentication evidence was correlated with the previously identified name-resolution and host activity to better understand how the credential exposure occurred.
+
+This demonstrated the importance of examining multiple related network events rather than treating authentication traffic in isolation.
 
 ### 5. SMB Traffic Analysis
 
-SMB-related traffic was examined to understand activity occurring after the suspicious name-resolution exchange.
+SMB-related traffic was examined to understand the network activity associated with the suspected credential-poisoning incident.
 
-Analyzing this traffic provided additional context about communications between the involved systems and helped reconstruct the sequence of events.
+The SMB communication provided additional context for the authentication activity observed during the investigation and helped connect the name-resolution activity with subsequent communication between the involved systems.
+
+By reviewing the relevant packets and their sequence, the investigation was able to follow the activity beyond the initial LLMNR/NBT-NS exchange and better understand how the systems interacted during the incident.
 
 ### 6. Evidence Correlation
 
-Findings from the LLMNR/NBT-NS, authentication, and SMB traffic were correlated to develop a clearer picture of the incident.
+The final stage of the investigation involved correlating evidence from the LLMNR/NBT-NS traffic, involved hosts, authentication activity, and SMB communications.
 
-Rather than relying on a single packet, multiple pieces of network evidence were used to understand how the suspicious activity progressed.
+Rather than relying on a single packet or indicator, the investigation used multiple pieces of network evidence to reconstruct the sequence of suspicious activity.
+
+### Investigation Findings
+
+The analysis established a relationship between:
+
+- Suspicious LLMNR/NBT-NS name-resolution activity
+- The systems involved in the request and response
+- Authentication activity associated with the incident
+- Evidence of credential exposure
+- Subsequent SMB-related network communication
+
+By correlating these events, the investigation demonstrated how packet-level evidence can be used to trace suspicious network behaviour and understand how credential-poisoning activity develops across multiple protocols.
+
+### Investigation Conclusion
+
+The exercise demonstrated the importance of examining network events as part of a larger sequence rather than analyzing individual packets in isolation.
+
+Combining name-resolution, authentication, host, and SMB evidence provided a more complete understanding of the incident and strengthened the reliability of the investigative findings.
 
 ## Skills Demonstrated
 
